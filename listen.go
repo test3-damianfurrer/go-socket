@@ -31,8 +31,14 @@ func echoServer(c net.Conn) {
 				databuf = append(databuf,'\n')
 				break
 			}
+			if tmpbuf[0] == 10 {
+				databuf = append(databuf,'\n')
+				break
+			}
 			databuf = append(databuf,tmpbuf[0])
 		}
+		fmt.Printf("Received: %s",databuf)
+		c.Write(databuf)
 	}
     c.Close()
     fmt.Println("Connection Closed")
