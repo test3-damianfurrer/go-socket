@@ -4,13 +4,50 @@ import (
     "fmt"
     "os"
 	"net"
-	"io"
+//	"io"
 )
 
 func echoServer(c net.Conn) {
     fmt.Printf("Client connected [%s]\n", c.RemoteAddr().Network())
-    io.Copy(c, c)
+    fmt.Println("addr",c.RemoteAddr())
+    //io.Copy(c, c)
+	for{
+		databuf := make([]byte,0)
+		tmpbuf := make([]byte, 1)
+		
+		for {
+			_, err := c.Read(tmpbuf)
+			if err != nil {
+				if err.Error() != "EOF"{
+					fmt.Println("READ ERR",err.Error())
+				} else {
+					fmt.Println("Client Connection Closed",err.Error())
+				}
+				c.Close()
+				return
+					
+			}
+			//fmt.Println("byte",tmpbuf[0])
+			if tmpbuf[0] == '\n' {
+				databuf = append(databuf,'\n')
+				break
+			}
+			if tmpbuf[0] == 0 {
+				databuf = append(databuf,'\n')
+				break
+			}
+			if tmpbuf[0] == 10 {
+				databuf = append(databuf,'\n')
+				break
+			}
+			databuf = append(databuf,tmpbuf[0])
+		}
+		fmt.Printf("Received: %s",databuf)
+		c.Write([]byte{'Y','o','u',' ','s','e','n','t',':',' '})
+		c.Write(databuf)
+	}
     c.Close()
+    fmt.Println("Connection Closed")
 }
 
 func main() {
