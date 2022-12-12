@@ -9,8 +9,10 @@ import (
 
 func echoServer(c net.Conn) {
     fmt.Printf("Client connected [%s]\n", c.RemoteAddr().Network())
+    fmt.Println("addr",c.RemoteAddr())
     io.Copy(c, c)
     c.Close()
+    fmt.Println("Connection Closed")
 }
 
 func main() {
