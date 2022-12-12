@@ -10,7 +10,23 @@ import (
 func echoServer(c net.Conn) {
     fmt.Printf("Client connected [%s]\n", c.RemoteAddr().Network())
     fmt.Println("addr",c.RemoteAddr())
-    io.Copy(c, c)
+    //io.Copy(c, c)
+	for{
+		databuf := make([]byte,0)
+		tmpbuf := make([]byte, 1)
+		for {
+			_, err := c.Read(tmpbuf)
+			if err != nil {
+				fmt.Println("READ ERR")
+				break
+			}
+			if tmpbuf[0] = '\n' {
+				databuf = append(databuf,'\n')
+				break
+			}
+			databuf = append(databuf,tmpbuf[0])
+		}
+	}
     c.Close()
     fmt.Println("Connection Closed")
 }
