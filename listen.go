@@ -18,9 +18,13 @@ func echoServer(c net.Conn) {
 		for {
 			_, err := c.Read(tmpbuf)
 			if err != nil {
-				fmt.Println("READ ERR")
-				//break
+				if err.Error() != "EOF"{
+					fmt.Println("READ ERR",err.Error())
+				} else {
+					fmt.Println("Client Connection Closed",err.Error())
+				}
 				return
+					
 			}
 			fmt.Println("byte",tmpbuf[0])
 			if tmpbuf[0] == '\n' {
@@ -38,6 +42,7 @@ func echoServer(c net.Conn) {
 			databuf = append(databuf,tmpbuf[0])
 		}
 		fmt.Printf("Received: %s",databuf)
+		c.Write([]byte{'Y','o','u',' ','s','e','n','t',':',' '})
 		c.Write(databuf)
 	}
     c.Close()
