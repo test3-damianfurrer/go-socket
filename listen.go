@@ -23,10 +23,11 @@ func echoServer(c net.Conn) {
 				} else {
 					fmt.Println("Client Connection Closed",err.Error())
 				}
+				c.Close()
 				return
 					
 			}
-			fmt.Println("byte",tmpbuf[0])
+			//fmt.Println("byte",tmpbuf[0])
 			if tmpbuf[0] == '\n' {
 				databuf = append(databuf,'\n')
 				break
