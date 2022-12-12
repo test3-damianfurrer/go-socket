@@ -14,12 +14,15 @@ func echoServer(c net.Conn) {
 	for{
 		databuf := make([]byte,0)
 		tmpbuf := make([]byte, 1)
+		
 		for {
 			_, err := c.Read(tmpbuf)
 			if err != nil {
 				fmt.Println("READ ERR")
-				break
+				//break
+				return
 			}
+			fmt.Println("byte",tmpbuf[0])
 			if tmpbuf[0] == '\n' {
 				databuf = append(databuf,'\n')
 				break
