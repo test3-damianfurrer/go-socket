@@ -20,7 +20,11 @@ func echoServer(c net.Conn) {
 				fmt.Println("READ ERR")
 				break
 			}
-			if tmpbuf[0] = '\n' {
+			if tmpbuf[0] == '\n' {
+				databuf = append(databuf,'\n')
+				break
+			}
+			if tmpbuf[0] == 0 {
 				databuf = append(databuf,'\n')
 				break
 			}
