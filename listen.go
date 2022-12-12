@@ -8,7 +8,7 @@ import (
 )
 
 func echoServer(c net.Conn) {
-    log.Printf("Client connected [%s]", c.RemoteAddr().Network())
+    fmt.Printf("Client connected [%s]\n", c.RemoteAddr().Network())
     io.Copy(c, c)
     c.Close()
 }
