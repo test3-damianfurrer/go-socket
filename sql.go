@@ -39,5 +39,17 @@ func (this *MyDB)Open() bool {
     return true
 }
 func (this *MyDB)Create() bool {
+	db, err := sql.Open("sqlite3", this.DbFile)
+	if err != nil {
+    	fmt.Printf("Error: failed to open DB %s ",this.DbFile)
+        fmt.Println(" with error ", err.Error())
+		fmt.Println("Error: failed to create db")
+        return false
+    } 
+	_, err = db.Exec("CREATE TABLE data (id TEXT not null primary key, content TEXT);")
+	if err != nil {
+		fmt.Println("Error: failed to create db", err.Error())
+	}
+	db.Close()
     return true
 }
