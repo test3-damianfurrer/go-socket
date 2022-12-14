@@ -55,6 +55,7 @@ func (this *MyDB)Create() bool {
 	}
 	return this.DbExists
 }
-func (this *MyDB)Close() bool {
+func (this *MyDB)Close() *MyDB {
 	this.Db.Close()
+	return nil
 }
