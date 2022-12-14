@@ -4,9 +4,10 @@ import(
     "fmt"
     "net"
     "strings"
+    "database/sql"
 )
 
-func prcdbcommand(databuf []byte,conn net.Conn,mydb *MyDB) {
+func prcdbcommand(databuf []byte,conn net.Conn,db *sql.DB) {
     maincmd := ""
     actnid := ""
     text := ""
@@ -31,9 +32,9 @@ func prcdbcommand(databuf []byte,conn net.Conn,mydb *MyDB) {
     
     switch maincmd {
         case "READ":
-            readDB(actnid, conn, mydb.Db)
+            readDB(actnid, conn, db)
         case "WRITE":
-            writeDB(actnid, text, conn, mydb.Db)
+            writeDB(actnid, text, conn, db)
     }
 }
 
