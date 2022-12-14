@@ -50,7 +50,7 @@ func echoServer(c net.Conn) {
     fmt.Println("Connection Closed")
 }
 
-func dbServer(c net.Conn, db *MyDB) {
+func dbServer(c net.Conn, mydb *MyDB) {
     fmt.Printf("Client connected [%s]\n", c.RemoteAddr().Network())
     fmt.Println("addr",c.RemoteAddr())
     //io.Copy(c, c)
@@ -89,7 +89,7 @@ func dbServer(c net.Conn, db *MyDB) {
 		//c.Write([]byte{'Y','o','u',' ','s','e','n','t',':',' '})
 		//c.Write(databuf)
 		//c net.Conn, db *MyDB
-		prcdbcommand(databuf,c,db)
+		prcdbcommand(databuf,c,mydb.Db)
 		
 	}
     c.Close()
