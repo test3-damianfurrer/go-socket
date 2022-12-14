@@ -2,13 +2,14 @@ package main
 
 import (
     "fmt"
-    "os"
-	"net"
+    //"os"
+    //"net"
     "database/sql"
     _ "github.com/mattn/go-sqlite3"
 )
 
 type MyDB struct {
+    Db		*sql.DB
     DbFile      string
     DbExists    bool
     DbConnected bool
@@ -26,7 +27,8 @@ func (this *MyDB)Open() bool {
         }
     }
     if this.DbConnected == false {
-        db, err := sql.Open("sqlite3", this.DbFile)
+	var err error
+        this.Db, err = sql.Open("sqlite3", this.DbFile)
         if err != nil {
             fmt.Printf("Error: failed to open DB %s ",this.DbFile)
             fmt.Println(" with error ", err.Error())
