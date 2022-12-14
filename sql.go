@@ -21,11 +21,6 @@ func NewMyDb() *MyDB {
 }
 
 func (this *MyDB)Open() bool {
-    if this.DbExists == false {
-        if this.Create() == false {
-            return false
-        }
-    }
     if this.DbConnected == false {
 	var err error
         this.Db, err = sql.Open("sqlite3", this.DbFile)
@@ -36,20 +31,22 @@ func (this *MyDB)Open() bool {
         }
         this.DbConnected = true
     }
+    if this.DbExists == false {
+        if this.Create() == false {
+	    fmt.Printf("Error: failed to Setup opened DB %s ",this.DbFile)
+            return false
+        }
+    }
     return true
 }
 func (this *MyDB)Create() bool {
-	db, err := sql.Open("sqlite3", this.DbFile)
-	if err != nil {
-    	fmt.Printf("Error: failed to open DB %s ",this.DbFile)
-        fmt.Println(" with error ", err.Error())
-		fmt.Println("Error: failed to create db")
-        return false
-    } 
-	_, err = db.Exec("CREATE TABLE data (id TEXT not null primary key, content TEXT);")
+	This.DbExists=true
+	_, err = this.Db.Exec("CREATE TABLE data (id TEXT not null primary key, content TEXT);")
 	if err != nil {
 		fmt.Println("Error: failed to create db", err.Error())
 	}
-	db.Close()
     return true
+}
+func (this *MyDB)Create() bool {
+	this.Db.Close()
 }
