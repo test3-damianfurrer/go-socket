@@ -89,7 +89,7 @@ func dbServer(c net.Conn, db *MyDB) {
 		//c.Write([]byte{'Y','o','u',' ','s','e','n','t',':',' '})
 		//c.Write(databuf)
 		//c net.Conn, db *MyDB
-		prcdbcommand(databuf,conn,db)
+		prcdbcommand(databuf,c,db)
 		
 	}
     c.Close()
