@@ -63,6 +63,7 @@ func main() {
     }
 
     mydb:=NewMyDb()
+	mydb.DbFile = mydir+"/test.sqlite"
     if mydb.Open() {
 		fmt.Println("DB opened")
 	} else {
