@@ -62,6 +62,14 @@ func main() {
         panic(err)
     }
 
+    mydb:=NewMyDb()
+    if mydb.Open() {
+		fmt.Println("DB opened")
+	} else {
+		fmt.Println("DB NOT opened")
+	}
+	
+	
     l, err := net.Listen("unix", SockAddr)
     if err != nil {
         fmt.Println("listen error:",err.Error())
