@@ -116,8 +116,8 @@ func main() {
 		fmt.Println("DB NOT opened")
 		return
 	}
-	//defer mydb.Close()
-	defer mydb = mydb.Close()
+	defer mydb.Close()
+	//defer mydb = mydb.Close()
 	
 	
     l, err := net.Listen("unix", SockAddr)
