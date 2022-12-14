@@ -36,7 +36,7 @@ func prcdbcommand(databuf []byte,conn net.Conn,db *sql.DB) {
         case "WRITE":
             writeDB(actnid, text, conn, db)
         default:
-            conn.Write([]byte(fmt.Sprintf("Did not understand action '%s'",maincmd)))
+            conn.Write([]byte(fmt.Sprintf("Did not understand action '%s'\n",maincmd)))
     }
 }
 
