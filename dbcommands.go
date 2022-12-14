@@ -35,6 +35,8 @@ func prcdbcommand(databuf []byte,conn net.Conn,db *sql.DB) {
             readDB(actnid, conn, db)
         case "WRITE":
             writeDB(actnid, text, conn, db)
+        default:
+            conn.Write([]byte(fmt.Sprintf("Did not understand action '%s'",maincmd)))
     }
 }
 
@@ -52,7 +54,7 @@ func readDB(id string, conn net.Conn,db *sql.DB) {
         } else {
             sendstring := fmt.Sprintf("id : %s; content: %s\n", tid, tcontent)
             fmt.Printf("DEBUG: %s", sendstring)
-            conn.Write(sendstring)
+            conn.Write([]byte(sendstring))
         }
         //conn.Write([]byte{'x','\n'})
     }
