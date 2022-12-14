@@ -40,13 +40,21 @@ func (this *MyDB)Open() bool {
     return true
 }
 func (this *MyDB)Create() bool {
-	This.DbExists=true
-	_, err = this.Db.Exec("CREATE TABLE data (id TEXT not null primary key, content TEXT);")
+	stats, err := os.Stat(this.DbFile)
 	if err != nil {
-		fmt.Println("Error: failed to create db", err.Error())
+		_, err = this.Db.Exec("CREATE TABLE data (id TEXT not null primary key, content TEXT);")
+		if err != nil {
+			fmt.Println("Error: failed to create db", err.Error())
+			return false
+		}
+		This.DbExists=true
+	    
+	} else {
+		fmt.Println("File exists, stats: ",stats)
+		This.DbExists=true
 	}
-    return true
+	return This.DbExists
 }
-func (this *MyDB)Create() bool {
+func (this *MyDB)Close() bool {
 	this.Db.Close()
 }
