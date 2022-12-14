@@ -39,18 +39,18 @@ func prcdbcommand(databuf []byte,conn net.Conn,db *sql.DB) {
 }
 
 func readDB(id string, conn net.Conn,db *sql.DB) {
-    result, err := db.Query("select content from data where id like ?",id + "%")
+    rows, err := db.Query("select content from data where id like ?",id + "%")
     if err != nil {
         fmt.Println("Query Error: ", err.Error())
     }
-    var id string
-    var content string
+    var tid string
+    var tcontent string
     for rows.Next() {
-        err = rows.Scan(&id, &content)
+        err = rows.Scan(&tid, &tcontent)
         if err != nil {
             fmt.Println("Error reading rows: ", err.Error())
         } else {
-            sendstring := fmt.Sprintf("id : %s; content: %s", id, content)
+            sendstring := fmt.Sprintf("id : %s; content: %s", tid, tcontent)
             fmt.Printf("DEBUG: %s", sendstring)
         }
         conn.Write([]byte{'x','\n'})
