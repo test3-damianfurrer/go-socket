@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-    //"os"
+    "os"
     //"net"
     "database/sql"
     _ "github.com/mattn/go-sqlite3"
@@ -47,13 +47,13 @@ func (this *MyDB)Create() bool {
 			fmt.Println("Error: failed to create db", err.Error())
 			return false
 		}
-		This.DbExists=true
+		this.DbExists=true
 	    
 	} else {
 		fmt.Println("File exists, stats: ",stats)
-		This.DbExists=true
+		this.DbExists=true
 	}
-	return This.DbExists
+	return this.DbExists
 }
 func (this *MyDB)Close() bool {
 	this.Db.Close()
